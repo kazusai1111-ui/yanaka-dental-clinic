@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電話予約 - 谷中歯科クリニック</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=M+PLUS+Rounded+1c:wght@700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #e3f2fd 0%, #fff9e6 50%, #e8f5e9 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 30px;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            color: #666;
+            font-weight: 700;
+        }
+        
+        /* 電話番号ボタン */
+        .phone-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+            transition: all 0.3s;
+        }
+        
+        .phone-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(76, 175, 80, 0.4);
+        }
+        
+        .phone-button:active {
+            transform: scale(0.98);
+        }
+        
+        /* 情報セクション */
+        .info-section {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .info-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1976d2;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-content {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .info-content strong {
+            color: #1976d2;
+            font-weight: 700;
+        }
+        
+        /* 診療時間テーブル */
+        .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .hours-table th,
+        .hours-table td {
+            padding: 12px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+        }
+        
+        .hours-table th {
+            background: #1976d2;
+            color: white;
+            font-weight: 700;
+        }
+        
+        .hours-table td {
+            background: white;
+        }
+        
+        .closed {
+            color: #999;
+        }
+        
+        /* 地図 */
+        .map-container {
+            width: 100%;
+            height: 350px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-top: 15px;
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* 戻るボタン */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #e0e0e0;
+            color: #333;
+            padding: 15px 30px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            margin-top: 30px;
+            transition: all 0.3s;
+        }
+        
+        .back-button:hover {
+            background: #d0d0d0;
+            transform: translateY(-2px);
+        }
+        
+        .address-link {
+            color: #1976d2;
+            text-decoration: none;
+            font-weight: 700;
+        }
+        
+        .address-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* QRコード */
+        .qr-section {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .qr-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1976d2;
+            margin-bottom: 15px;
+        }
+        
+        .qr-code {
+            max-width: 200px;
+            width: 100%;
+            height: auto;
+            border: 3px solid #1976d2;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .qr-description {
+            font-size: 14px;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 600px) {
+            .phone-button {
+                font-size: 22px;
+                padding: 25px 20px;
+            }
+            
+            .hours-table th,
+            .hours-table td {
+                padding: 8px 5px;
+                font-size: 14px;
+            }
+            
+            .info-title {
+                font-size: 18px;
+            }
+            
+            .info-content {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="logo">谷中歯科クリニック</h1>
+            <p class="subtitle">📞 電話予約</p>
+        </div>
+        
+        <!-- 電話番号ボタン -->
+        <a href="tel:03-5682-6480" class="phone-button">
+            <span>📞</span>
+            <span>03-5682-6480</span>
+        </a>
+        
+        <!-- QRコード -->
+        <div class="qr-section">
+            <div class="qr-title">📱 QRコードで予約ページへ</div>
+            <img src="yanaka_qr.png" alt="谷中歯科クリニック予約QRコード" class="qr-code">
+            <p class="qr-description">スマートフォンでQRコードを読み取ると<br>電話予約・ネット予約を選択できます</p>
+        </div>
+        
+        <!-- 診療時間 -->
+        <div class="info-section">
+            <div class="info-title">
+                <span>🕐</span>
+                <span>診療時間</span>
+            </div>
+            <table class="hours-table">
+                <thead>
+                    <tr>
+                        <th>曜日</th>
+                        <th>午前</th>
+                        <th>午後</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>月・火・木・金</strong></td>
+                        <td>10:00 - 13:00</td>
+                        <td>15:00 - 20:00</td>
+                    </tr>
+                    <tr>
+                        <td><strong>土</strong></td>
+                        <td colspan="2">10:00 - 15:00</td>
+                    </tr>
+                    <tr>
+                        <td><strong>水・日・祝</strong></td>
+                        <td colspan="2" class="closed">休診</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- アクセス -->
+        <div class="info-section">
+            <div class="info-title">
+                <span>📍</span>
+                <span>アクセス</span>
+            </div>
+            <div class="info-content">
+                <p><strong>〒120-0006</strong></p>
+                <p>東京都足立区谷中4-1-20</p>
+                <p>北綾瀬PSSビル2階</p>
+                <p style="margin-top: 10px;">
+                    <strong>🚇 東京メトロ千代田線「北綾瀬駅」徒歩1分</strong>
+                </p>
+            </div>
+            
+            <!-- Googleマップ埋め込み（ホームページと同じデザイン） -->
+            <div id="customMap" style="border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1); position: relative; width: 100%; height: 400px; background: #f0f0f0; margin-top: 15px;">
+                <iframe 
+                    src="https://www.google.com/maps?q=東京都足立区谷中4-1-20+北綾瀬PSSビル&output=embed&z=18" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                
+                <!-- 赤い歯のマーカー -->
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -100%); z-index: 10; pointer-events: none;">
+                    <div style="font-size: 60px; filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.3)); animation: bounce 2s ease-in-out infinite;">
+                        🦷
+                    </div>
+                    <div style="position: absolute; top: -10px; left: -10px; width: 80px; height: 80px; background: radial-gradient(circle, rgba(255, 0, 0, 0.3) 0%, transparent 70%); border-radius: 50%; animation: pulse 2s ease-in-out infinite;"></div>
+                </div>
+                
+                <!-- クリニック名のラベル -->
+                <div style="position: absolute; top: calc(50% + 40px); left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #dc143c 0%, #b71c1c 100%); color: white; padding: 10px 20px; border-radius: 25px; font-weight: 700; font-size: 14px; box-shadow: 0 5px 15px rgba(220, 20, 60, 0.4); white-space: nowrap; pointer-events: none; z-index: 10;">
+                    🦷 谷中歯科クリニック
+                </div>
+            </div>
+            
+            <style>
+                @keyframes bounce {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(-15px); }
+                }
+                
+                @keyframes pulse {
+                    0%, 100% { opacity: 0.6; transform: scale(1); }
+                    50% { opacity: 1; transform: scale(1.1); }
+                }
+            </style>
+            
+            <div class="info-content" style="margin-top: 15px; text-align: center;">
+                <a href="https://www.google.com/maps/search/?api=1&query=東京都足立区谷中4-1-20" 
+                   target="_blank" 
+                   class="address-link">
+                    📱 Googleマップで開く
+                </a>
+            </div>
+        </div>
+        
+        <!-- 戻るボタン -->
+        <div style="text-align: center;">
+            <a href="landing.html" class="back-button">
+                <span>←</span>
+                <span>戻る</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
